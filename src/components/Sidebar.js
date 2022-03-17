@@ -8,12 +8,16 @@ import {
   PeopleAlt,
 } from "@material-ui/icons";
 import React from "react";
+import useRooms from '../hooks/useRooms';
 import SidebarList from "./SidebarList";
 import { auth, db, createTimestamp } from "../firebase";
 import "./Sidebar.css";
 import { NavLink, Switch, Route } from "react-router-dom";
 
 export default function Sidebar({ user, page }) {
+
+  const rooms = useRooms();
+
   const [menu, setMenu] = React.useState(1);
 
   function signOut() {
@@ -114,26 +118,26 @@ export default function Sidebar({ user, page }) {
       {page.isMobile ? (
         <Switch>
           <Route path="/chats">
-            <SidebarList />
+            <SidebarList title="Chats" data={[]}/>
           </Route>
           <Route path="/rooms">
-            <SidebarList />
+            <SidebarList title="Rooms" data={rooms}/>
           </Route>
           <Route path="/users">
-            <SidebarList />
+            <SidebarList title="Users" data={[]}/>
           </Route>
           <Route path="/search">
-            <SidebarList />
+            <SidebarList title="Search Results" data={[]} />
           </Route>
         </Switch>
       ) : menu === 1 ? (
-        <SidebarList />
+        <SidebarList title="Chats" data={[]}/>
       ) : menu === 2 ? (
-        <SidebarList />
+        <SidebarList title="Rooms" data={rooms}/>
       ) : menu === 3 ? (
-        <SidebarList />
+        <SidebarList title="Users" data={[]}/>
       ) : menu === 4 ? (
-        <SidebarList />
+        <SidebarList title="Search Results" data={[]}/>
       ) : null}
 
       <div className="sidebar__chat--addRoom">
